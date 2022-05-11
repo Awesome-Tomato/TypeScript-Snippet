@@ -1,0 +1,55 @@
+:root {
+  --background: #f1f5f8;
+  --text: #102b42;
+  --text-point: #008000;
+  --focus-outline: #0158c9;
+  --dark: #2f2f2f;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: var(--background);
+
+  margin: 0;
+  font-size: 125%;
+}
+
+.counter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.counter__title {
+  color: var(--text);
+  font-size: 4.4rem;
+  margin-bottom: 2.4rem;
+  margin-top: 0;
+}
+
+.counter__count {
+  color: var(--text-point);
+  font-size: 4.4rem;
+  margin-bottom: 2.4rem;
+  font-weight: bold;
+}
+
+.counter__buttons {
+  display: flex;
+  gap: 1.6rem;
+  justify-content: center;
+}
+
+.button {
+  padding: 0.4rem;
+  border: 1px solid var(--dark);
+  border-radius: 0.2rem;
+  background-color: var(--background);
+}
+.button:focus {
+  outline: none;
+  border: 1px solid var(--focus-outline);
+}
