@@ -10,16 +10,20 @@ export default class Counter {
 
   increase() {
     this.current += 1;
-    this.callback(this.current);
+    this.update();
   }
 
   decrease() {
     this.current -= 1;
-    this.callback(this.current);
+    this.update();
   }
 
   reset() {
     this.current = this.defaultCurrent;
+    this.update();
+  }
+
+  update() {
     this.callback(this.current);
   }
 }
