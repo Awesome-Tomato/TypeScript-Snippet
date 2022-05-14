@@ -1,4 +1,4 @@
-# TypeScript Snippets
+# TypeScript Snippets 너무 좋아요~~
 
 타입스크립트 기초를 학습하며 만든 snippets를 모아놓는 레포입니다.
 
