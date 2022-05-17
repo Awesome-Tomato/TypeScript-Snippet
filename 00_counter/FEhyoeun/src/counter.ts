@@ -1,27 +1,20 @@
-
 let count: number = 0;
 
-let countElement = document.getElementById('count');
-let decreaseButton = document.getElementById('button-decrease');
-let resetButton = document.getElementById('button-reset');
-let increaseButton = document.getElementById('button-increase');
-const countElementUpdate = () => countElement!.innerText = String(count);
+const countElement = document.getElementById('count') as HTMLElement;
+const countElementUpdate = ():string => countElement.innerText = String(count);
 
 countElementUpdate();
-
-decreaseButton!.addEventListener("click", () => {
-    count >0 ? count-- : count = 0
-    countElementUpdate();
+const buttonWrapper = document.getElementById("button-wrapper") as HTMLElement;
+buttonWrapper.addEventListener("click", (e) => {
+    let target = e.target as HTMLElement;
+    if(target.id === 'button-decrease') {
+        count > 0 ? count-- : count = 0
+        countElementUpdate();
+    } else if(target.id === 'button-reset') {
+        count = 0;
+        countElementUpdate();
+    } else if(target.id === 'button-increase') {
+        count++;
+        countElementUpdate();
+    }
 })
-
-resetButton!.addEventListener("click", () => {
-    count = 0;
-    countElementUpdate();
-})
-
-increaseButton!.addEventListener("click", () => {
-    count++;
-    countElementUpdate();
-})
-
-
