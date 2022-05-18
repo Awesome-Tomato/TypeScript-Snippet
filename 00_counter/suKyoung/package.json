@@ -1,0 +1,13 @@
+{
+  "name": "00_counter",
+  "version": "1.0.0",
+  "description": "TypeScript를 활용하여 카운터 앱 구현하기",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }, 
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "typescript": "^4.6.4"
+}
