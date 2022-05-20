@@ -1,0 +1,33 @@
+html, body, div, h2, p, button {
+    margin: 0px;
+    padding: 0px;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+#counter-title {
+    color: #0f2a41;
+    font-size: 50px;
+    font-weight: 700;
+    margin: 20px;
+}
+
+#count {
+    color: #238b1e;
+    font-size: 80px;
+    font-weight: 700;
+    margin: 20px;
+}
+
+button {
+    border-radius: 5px;
+    background-color: white;
+    padding: 10px;
+    margin-right: 10px;
+}
