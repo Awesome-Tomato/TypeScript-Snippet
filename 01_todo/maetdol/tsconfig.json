@@ -4,7 +4,6 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
 
-    "baseUrl": "./src",
     "sourceMap": true,
     "target": "ESNext",
 
