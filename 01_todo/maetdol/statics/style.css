@@ -1,0 +1,124 @@
+:root {
+  --color-primary: #a8d5f7;
+  --color-primary-80: #f0f5fc;
+  --color-primary-70: #f1f6fd;
+  --color-primary-60: #f2f7fe;
+  --color-primary-10: #5c6d78;
+
+  --success: #53d059;
+  --error: #d24063;
+  --white: #ffffff;
+  --background: var(--color-primary-70);
+  --text-primary: #0b2239;
+  --text-light: var(--color-primary-10);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+
+  font-size: 62.5%;
+
+  background-color: var(--background);
+}
+
+.ir {
+  width: 1px;
+  overflow: hidden;
+}
+
+.todo-main {
+  margin: 8rem auto;
+  background-color: var(--white);
+  width: 48rem;
+  border-radius: 0.4rem;
+  box-shadow: 2rem 2rem 12rem rgba(0, 0, 0, 0.3);
+  padding: 1.6rem;
+  box-sizing: border-box;
+}
+
+.todo-main__title {
+  text-align: center;
+  font-size: 3rem;
+  color: var(--text-primary);
+  margin-top: 3.2rem;
+  letter-spacing: 0.2rem;
+}
+
+.todo-main__form {
+  display: flex;
+  height: 3.2rem;
+  margin-bottom: 3.2rem;
+}
+
+.form__input {
+  width: 100%;
+  background-color: var(--color-primary-70);
+  border: none;
+  padding-left: 1.6rem;
+  border-top-left-radius: 0.8rem;
+  border-bottom-left-radius: 0.8rem;
+  overflow: hidden;
+  font-size: 1.4rem;
+}
+.form__input:focus {
+  outline-color: var(--color-primary);
+}
+.form__input::placeholder {
+  color: var(--text-light);
+  font-weight: bold;
+}
+
+.form__button--submit {
+  padding: 0 1.2rem;
+  background-color: var(--color-primary);
+  border: none;
+  border-top-right-radius: 0.8rem;
+  border-bottom-right-radius: 0.8rem;
+  cursor: pointer;
+}
+
+.todo-main__todos {
+  margin: 0;
+  padding: 1.6rem;
+}
+.todos__item {
+  list-style: none;
+  font-size: 1.4rem;
+  display: flex;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  margin-bottom: 1.6rem;
+}
+.todo__buttons {
+  margin-left: auto;
+}
+.todo__button {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.edit-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: var(--success);
+}
+.delete-icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: var(--error);
+}
+
+.todos__button--delete-all {
+  display: block;
+  margin: auto;
+  background: none;
+  color: var(--error);
+  border: none;
+  font-weight: bold;
+  letter-spacing: 0.2rem;
+  cursor: pointer;
+}
