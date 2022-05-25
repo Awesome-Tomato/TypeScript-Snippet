@@ -1,0 +1,73 @@
+html, body, div, h4, input, button, ul, li, span {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+  height: 30px;
+  font-weight: bold;
+  background-color: white;
+}
+
+
+ul {
+  list-style: none;
+}
+
+#wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#grocery-title {
+  color: #063251;
+  font-size: 30px;
+}
+
+#input-wrapper {
+  margin: 20px 0px 30px 0px;
+}
+
+#grocery-input {
+  color: #295e97;
+  background-color: #f1f2f9;
+  padding-left: 10px;
+  border-radius: 5px;
+  height: 25px;
+}
+
+#grocery-input:focus {
+  color: #295e97;
+}
+
+#submit-button {
+  background-color: #9fcbe8;
+}
+
+#list-wrapper {
+  margin: 20px;
+  min-width: 50%;
+}
+
+#item-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#clear-button {
+  color: #e5696a;
+  font-size: 20px;
+  width: 100%;
+}
+
+
+
+/* 수정 */
+/*#73e67d*/
