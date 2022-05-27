@@ -4,7 +4,7 @@ export class TodoManager {
   private todos: Todo[] = [];
   private idForAssign = 1;
 
-  constructor(private updateCallback: (todo: Todo[]) => void) {}
+  constructor(private updateCallback: (todoManager: TodoManager) => void) {}
 
   addTodo(text: string) {
     this.todos.push({
@@ -34,11 +34,15 @@ export class TodoManager {
     this.render();
   }
 
+  getAllTodo() {
+    return this.todos;
+  }
+
   private autoIncrementId() {
     return this.idForAssign++;
   }
 
   private render() {
-    this.updateCallback(this.todos);
+    this.updateCallback(this);
   }
 }
