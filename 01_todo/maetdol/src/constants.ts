@@ -1,4 +1,4 @@
 export enum Mode {
-  Add,
-  Edit,
+  Add = 'add',
+  Edit = 'edit',
 }
