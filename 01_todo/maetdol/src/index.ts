@@ -66,7 +66,12 @@ function renderer(todoManager: TodoManager) {
   todos.forEach((todo) => {
     const todoItem = newTodoItem(
       todo,
-      () => todoManager.deleteTodo(todo.id),
+      () => {
+        todoManager.deleteTodo(todo.id);
+        setInputMode(Mode.Add);
+        toInputElement($('.form__input')).value = '';
+        toHTMLElement($('.form__button--submit')).innerText = 'Submit';
+      },
       () => {
         setInputMode(Mode.Edit);
         setInputTargetTodoId(todo.id);
