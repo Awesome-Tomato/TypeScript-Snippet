@@ -44,9 +44,7 @@ export function renderer(todoManager: TodoManager) {
       todo,
       () => {
         todoManager.deleteTodo(todo.id);
-        setInputMode(Mode.Add);
-        toInputElement($('.form__input')).value = '';
-        toHTMLElement($('.form__button--submit')).innerText = 'Submit';
+        changeInputToAddMode();
       },
       () => {
         changeInputToEditMode(todo);
