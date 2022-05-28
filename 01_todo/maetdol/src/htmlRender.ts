@@ -78,3 +78,19 @@ function newTodoItem(
   return li;
 }
 
+export const actionByMode = {
+  [Mode.Add]: (todoManager: TodoManager) => {
+    const input = toInputElement($('.form__input'));
+    todoManager.addTodo(input.value);
+    input.value = '';
+  },
+
+  [Mode.Edit]: (todoManager: TodoManager) => {
+    const input = toInputElement($('.form__input'));
+    const id = input.dataset.todoId;
+    if (!id) return;
+
+    todoManager.updateTodo(parseInt(id), input.value);
+    input.value = '';
+  },
+};
