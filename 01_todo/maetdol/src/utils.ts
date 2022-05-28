@@ -36,3 +36,11 @@ export function to<T>(cls: any, object: Object): T {
 
   throw new Error(`Object is not a type of ${cls}`);
 }
+
+export function isEnum<T>(enumObject: any, value: any): value is T {
+  if (Object.values(enumObject).includes(value.toString())) {
+    return value;
+  }
+
+  throw new Error(`${value} is not an enum value. enum : ${enumObject}`);
+}
