@@ -1,15 +1,8 @@
 import { Mode } from './constants.js';
-import { Todo } from './model.js';
+import { actionByMode } from './htmlRender.js';
+import { renderer, setInputMode } from './htmlRender.js';
 import { TodoManager } from './todoManager.js';
-import {
-  $,
-  getHTMLElementIn,
-  to,
-  toHTMLElement,
-  toInputElement,
-  toTemplateElement,
-} from './utils.js';
-import { changeInputToAddMode, renderer, setInputMode } from './htmlRender.js';
+import { $, isEnum, toInputElement } from './utils.js';
 
 run();
 
@@ -26,21 +19,9 @@ function run() {
     if (!inputField.value.trim()) return;
 
     const mode = inputField.dataset.mode;
+    if (!isEnum<Mode>(Mode, mode)) return;
 
-    switch (mode) {
-      case Mode.Add:
-        todoManager.addTodo(inputField.value);
-        break;
-
-      case Mode.Edit:
-        const todoId = inputField.dataset.todoId;
-        if (!todoId) return;
-
-        todoManager.updateTodo(parseInt(todoId), inputField.value);
-        changeInputToAddMode();
-        break;
-    }
-    inputField.value = '';
+    actionByMode[mode](todoManager);
   });
 
   const deleteAllButton = $('.todos__button--delete-all');
