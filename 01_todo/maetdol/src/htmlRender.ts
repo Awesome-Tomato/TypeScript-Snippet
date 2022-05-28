@@ -21,7 +21,9 @@ function changeInputToEditMode(todo: Todo) {
   setInputMode(Mode.Edit);
   setInputTargetTodoId(todo.id);
   toHTMLElement($('.form__button--submit')).innerText = 'Edit';
-  toInputElement($('.form__input')).value = todo.content;
+  const input = toInputElement($('.form__input'));
+  input.value = todo.content;
+  input.focus();
 }
 
 function setInputTargetTodoId(id: number) {
