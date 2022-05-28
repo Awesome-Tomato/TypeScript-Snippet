@@ -1,6 +1,5 @@
 import { Mode } from './constants.js';
-import { actionByMode } from './htmlRender.js';
-import { renderer, setInputMode } from './htmlRender.js';
+import { actionByMode, changeInputToAddMode, renderer } from './htmlRender.js';
 import { TodoManager } from './todoManager.js';
 import { $, isEnum, toInputElement } from './utils.js';
 
@@ -10,7 +9,7 @@ function run() {
   const todoManager = new TodoManager(renderer);
 
   const form = $('.todo-main__form');
-  setInputMode(Mode.Add);
+  changeInputToAddMode();
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -25,5 +24,8 @@ function run() {
   });
 
   const deleteAllButton = $('.todos__button--delete-all');
-  deleteAllButton.addEventListener('click', () => todoManager.deleteAll());
+  deleteAllButton.addEventListener('click', () => {
+    todoManager.deleteAll();
+    changeInputToAddMode();
+  });
 }
