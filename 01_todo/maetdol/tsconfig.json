@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+
+    "sourceMap": true,
+    "target": "ESNext",
+
+    "outDir": "./dist"
+  },
+
+  "include": ["src/**/*.ts"]
+}
