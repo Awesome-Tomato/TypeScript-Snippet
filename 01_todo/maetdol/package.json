@@ -1,0 +1,10 @@
+{
+  "name": "maetdol",
+  "scripts": {
+    "build": "npx tsc",
+    "local": "npx tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.2"
+  }
+}
