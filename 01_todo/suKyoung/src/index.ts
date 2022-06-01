@@ -28,7 +28,7 @@ function HTMLElements(): HTMLElements {
 init();
 
 function init() {
-  const {form, buttonDeleteAll} = HTMLElements();
+  const {form, buttonDeleteAll, buttonDelete} = HTMLElements();
 
   form?.addEventListener('submit', submitForm);
   buttonDeleteAll?.addEventListener('click', deleteAll);
@@ -48,7 +48,7 @@ function submitForm(e: any) {
   newHTMLEditButtonElement.setAttribute('type', 'button');
   newHTMLDeleteButtonElement.setAttribute('type', 'button');
   newHTMLEditButtonElement.setAttribute('class', 'edit');
-  newHTMLDeleteButtonElement.setAttribute('class', 'edit');
+  newHTMLDeleteButtonElement.setAttribute('class', 'delete');
   newHTMLEditButtonElement.innerText = 'edit';
   newHTMLDeleteButtonElement.innerText = 'delete';
 
