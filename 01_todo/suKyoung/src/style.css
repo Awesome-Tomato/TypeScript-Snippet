@@ -25,6 +25,7 @@ ul, li {
 button {
   background-color: transparent;
   cursor: pointer;
+  text-transform: capitalize;
 }
 
 /* Style elements */
