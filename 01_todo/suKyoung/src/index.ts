@@ -2,7 +2,6 @@ type HTMLElements = {
   form: HTMLFormElement | null;
   inputSearch: HTMLInputElement | null;
   buttonEdit: HTMLInputElement | null;
-  buttonDelete: HTMLInputElement | null;
   buttonDeleteAll: HTMLInputElement | null;
   listResult: HTMLUListElement | null;
 }
@@ -11,7 +10,6 @@ function HTMLElements(): HTMLElements {
   const form = document.querySelector('form');
   const inputSearch = document.querySelector('#searchInput');
   const buttonEdit = document.querySelector('.edit');
-  const buttonDelete = document.querySelector('.delete');
   const buttonDeleteAll = document.querySelector('#deleteAll');
   const listResult = document.querySelector('ul');
 
@@ -19,7 +17,6 @@ function HTMLElements(): HTMLElements {
     form: form as HTMLFormElement,
     inputSearch: inputSearch as HTMLInputElement,
     buttonEdit: buttonEdit as HTMLInputElement,
-    buttonDelete: buttonDelete as HTMLInputElement,
     buttonDeleteAll: buttonDeleteAll as HTMLInputElement,
     listResult: listResult as HTMLUListElement,
   }
@@ -28,7 +25,7 @@ function HTMLElements(): HTMLElements {
 init();
 
 function init() {
-  const {form, buttonDeleteAll, buttonDelete} = HTMLElements();
+  const {form, buttonDeleteAll} = HTMLElements();
 
   form?.addEventListener('submit', submitForm);
   buttonDeleteAll?.addEventListener('click', deleteAll);
@@ -37,6 +34,15 @@ function init() {
 function submitForm(e: any) {
   e.preventDefault();
   const {inputSearch, listResult} = HTMLElements();
+
+  const newHTMLLiElement = createHTMLLiElement();
+  if (newHTMLLiElement === undefined) return;
+  if (inputSearch !== null) inputSearch.value = '';
+
+  return listResult?.append(newHTMLLiElement);
+}
+
+function createHTMLLiElement() {
   const newGrocery = getInputValue();
   if (newGrocery === undefined) return;
 
@@ -51,19 +57,26 @@ function submitForm(e: any) {
   newHTMLDeleteButtonElement.setAttribute('class', 'delete');
   newHTMLEditButtonElement.innerText = 'edit';
   newHTMLDeleteButtonElement.innerText = 'delete';
+  newHTMLDeleteButtonElement.addEventListener('click', deleteSingleToDoList);
 
   newHTMLSpanElement.innerText = newGrocery;
   newHTMLLiElement.append(newHTMLSpanElement);
   newHTMLLiElement.append(newHTMLEditButtonElement);
   newHTMLLiElement.append(newHTMLDeleteButtonElement);
-  
-  if (inputSearch !== null) inputSearch.value = '';
-  return listResult?.append(newHTMLLiElement);
+
+  return newHTMLLiElement;
 }
 
 function getInputValue() {
   const { inputSearch } = HTMLElements();
+  if (inputSearch?.value === '') return;
+  
   return inputSearch?.value;
+}
+
+function deleteSingleToDoList(e: any) {
+  if (e.target.parentElement === undefined) console.error('Error: ', e);
+  e.target.parentElement.remove();
 }
 
 function deleteAll() {
