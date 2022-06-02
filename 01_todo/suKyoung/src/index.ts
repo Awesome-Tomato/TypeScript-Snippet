@@ -4,6 +4,7 @@ type HTMLElements = {
   buttonEdit: HTMLInputElement | null;
   buttonDeleteAll: HTMLInputElement | null;
   listResult: HTMLUListElement | null;
+  messageAlert: HTMLParagraphElement | null;
 }
 
 function HTMLElements(): HTMLElements {
@@ -12,6 +13,7 @@ function HTMLElements(): HTMLElements {
   const buttonEdit = document.querySelector('.edit');
   const buttonDeleteAll = document.querySelector('#deleteAll');
   const listResult = document.querySelector('ul');
+  const messageAlert = document.querySelector('.message_alert');
 
   return {
     form: form as HTMLFormElement,
@@ -19,8 +21,19 @@ function HTMLElements(): HTMLElements {
     buttonEdit: buttonEdit as HTMLInputElement,
     buttonDeleteAll: buttonDeleteAll as HTMLInputElement,
     listResult: listResult as HTMLUListElement,
+    messageAlert: messageAlert as HTMLParagraphElement,
   }
 }
+
+const STRING = {
+  SUCCESS: 'success',
+  WARNING: 'warning',
+  DEFAULT: 'default',
+  EMPTY: 'Please Enter Value',
+  ADDED: 'Item added to the list',
+  DELETE: 'all items are deleted',
+  DELETE_SINGLE: 'a single item is deleted',
+};
 
 init();
 
@@ -34,6 +47,7 @@ function init() {
 function submitForm(e: any) {
   e.preventDefault();
   const {inputSearch, listResult} = HTMLElements();
+  inputSearch?.addEventListener('keydown', resetMessageAlert);
 
   const newHTMLLiElement = createHTMLLiElement();
   if (newHTMLLiElement === undefined) return;
@@ -42,6 +56,7 @@ function submitForm(e: any) {
   return listResult?.append(newHTMLLiElement);
 }
 
+// CREATE TO-DO LIST
 function createHTMLLiElement() {
   const newGrocery = getInputValue();
   if (newGrocery === undefined) return;
@@ -59,7 +74,9 @@ function createHTMLLiElement() {
   newHTMLDeleteButtonElement.innerText = 'delete';
   newHTMLDeleteButtonElement.addEventListener('click', deleteSingleToDoList);
 
+  newHTMLSpanElement.setAttribute('class', 'capitalize');
   newHTMLSpanElement.innerText = newGrocery;
+
   newHTMLLiElement.append(newHTMLSpanElement);
   newHTMLLiElement.append(newHTMLEditButtonElement);
   newHTMLLiElement.append(newHTMLDeleteButtonElement);
@@ -67,20 +84,73 @@ function createHTMLLiElement() {
   return newHTMLLiElement;
 }
 
+// INPUT VALUE
+
 function getInputValue() {
-  const { inputSearch } = HTMLElements();
-  if (inputSearch?.value === '') return;
-  
+  const { inputSearch, messageAlert } = HTMLElements();
+  if (messageAlert === null) return;
+  if (inputSearch?.value === '') {   
+    paintMessageAlert(
+      STRING.EMPTY, 
+      STRING.WARNING,
+      STRING.SUCCESS, 
+    );
+    return;
+  }
+
+  paintMessageAlert(
+    STRING.ADDED, 
+    STRING.SUCCESS,
+    STRING.WARNING, 
+  );
   return inputSearch?.value;
 }
 
+// MESSAGE ALERT
+function resetMessageAlert() {
+  const { messageAlert } = HTMLElements();
+  if (messageAlert === null) return;
+
+  messageAlert.innerText = '';
+  messageAlert.classList.remove(STRING.SUCCESS);
+  messageAlert.classList.remove(STRING.WARNING);
+}
+
+function paintMessageAlert(
+    string: string, 
+    className1: string, 
+    className2: string,
+  ) {
+  const { messageAlert } = HTMLElements();
+  if (messageAlert === null) return;
+
+  messageAlert.innerText = string;
+  messageAlert.classList.remove(className2);
+  messageAlert.classList.add(className1);
+
+  return messageAlert;
+}
+
+// DELETE ITEMS
 function deleteSingleToDoList(e: any) {
-  if (e.target.parentElement === undefined) console.error('Error: ', e);
-  e.target.parentElement.remove();
+  const parentLiElement = e.target.parentElement;
+
+  if (parentLiElement === undefined) console.error('Error: ', e);
+  parentLiElement.remove();
+  paintMessageAlert(
+    STRING.DELETE_SINGLE, 
+    STRING.WARNING, 
+    STRING.SUCCESS,
+  );
 }
 
 function deleteAll() {
   const {listResult} = HTMLElements();
   if (listResult === null) return;
   [...listResult.children].forEach(lists => lists.remove()); // HTMLCollection
+  paintMessageAlert(
+    STRING.DELETE, 
+    STRING.WARNING, 
+    STRING.SUCCESS,
+  );
 }

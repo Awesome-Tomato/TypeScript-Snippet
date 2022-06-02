@@ -1,3 +1,16 @@
+:root {
+  --fontsize-heading: 24px;
+  --fontsize-paragraph1: 14px;
+  --fontsize-paragraph2: 12px;
+
+  --color-black: #343a40;
+  --color-white: #ffffff;
+  --color-warning: #fa5252;
+  --color-success: green;
+  --color-lightblue: rgb(165, 213, 249);
+  --color-lightgrey: rgb(241, 245, 248);
+}
+
 /* CSS Reset */
 html,
 body {
@@ -5,7 +18,7 @@ body {
   padding: 0;
 }
 body {
-  background-color: rgb(241, 245, 248);
+  background-color: var(--color-lightgrey)
 }
 form, 
 fieldset {
@@ -26,6 +39,10 @@ button {
   background-color: transparent;
   cursor: pointer;
   text-transform: capitalize;
+  font-size: var(--fontsize-paragraph2);
+}
+p {
+  margin: 0;
 }
 
 /* Style elements */
@@ -35,25 +52,39 @@ form {
   padding: 32px;
   width: 600px;
   height: 500px;
-  background-color: #fff;
+  background-color: var(--color-white);
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   box-sizing: border-box;
 }
 h1 {
+  height: 40px;
   text-align: center;
-  color: #343a40;
+  color: var(--color-black);
+  font-size: var(--fontsize-heading);
 }
 fieldset {
   width: 100%;
 }
-.hidden {
-  display: none;
+.capitalize {
+  text-transform: capitalize;
 }
 .message_alert {
+  height: 24px;
+  line-height: 24px;
   text-align: center;
-  background-color: #fa5252;
+  font-size: var(--fontsize-paragraph1);
 }
+.warning {
+  color: var(--color-white);
+  background-color: var(--color-warning);
+}
+.success {
+  color: var(--color-white);
+  background-color: var(--color-success);
+}
+
+
 .search {
   width: 100%;
   height: 32px;
@@ -66,14 +97,13 @@ fieldset {
   width: 80%;
   border: 2px solid transparent;
   background-color: rgb(241, 245, 248);
-}
-.search input:focus {
-  border: 2px solid blue;
+  font-size: var(--fontsize-paragraph1);
 }
 .search button {
   width: 20%;
   font-weight: 700;
-  background-color: rgb(165, 213, 249);
+  font-size: var(--fontsize-paragraph2);
+  background-color: var(--color-lightblue);
 }
 .searchResult {
   min-height: calc(100% - 145px);
@@ -93,8 +123,8 @@ fieldset {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #343a40;
-  font-size: 14px;
+  color: var(--color-black);
+  font-size: var(--fontsize-paragraph2);
 }
 .searchResult li:hover {
   background-color: rgba(0,0,0,0.1);
@@ -102,6 +132,7 @@ fieldset {
 .searchResult li span {
   margin-right: auto;
   padding-left: 16px;
+  font-size: var(--fontsize-paragraph2);
 }
 .message_clear {
   height: 32px;
@@ -111,5 +142,5 @@ fieldset {
   justify-content: center;
 }
 .message_clear button {
-  color: #fa5252;
+  color: var(--color-warning);
 }
