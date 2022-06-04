@@ -1,6 +1,8 @@
+// TYPE
 type HTMLElements = {
   form: HTMLFormElement | null;
   inputSearch: HTMLInputElement | null;
+  buttonSubmit: HTMLInputElement | null;
   buttonEdit: HTMLInputElement | null;
   buttonDeleteAll: HTMLInputElement | null;
   listResult: HTMLUListElement | null;
@@ -10,6 +12,7 @@ type HTMLElements = {
 function HTMLElements(): HTMLElements {
   const form = document.querySelector('form');
   const inputSearch = document.querySelector('#searchInput');
+  const buttonSubmit = document.querySelector('#submit');
   const buttonEdit = document.querySelector('.edit');
   const buttonDeleteAll = document.querySelector('#deleteAll');
   const listResult = document.querySelector('ul');
@@ -18,6 +21,7 @@ function HTMLElements(): HTMLElements {
   return {
     form: form as HTMLFormElement,
     inputSearch: inputSearch as HTMLInputElement,
+    buttonSubmit: buttonSubmit as HTMLInputElement,
     buttonEdit: buttonEdit as HTMLInputElement,
     buttonDeleteAll: buttonDeleteAll as HTMLInputElement,
     listResult: listResult as HTMLUListElement,
@@ -25,29 +29,22 @@ function HTMLElements(): HTMLElements {
   }
 }
 
-const STRING = {
-  SUCCESS: 'success',
-  WARNING: 'warning',
-  DEFAULT: 'default',
-  EMPTY: 'Please Enter Value',
-  ADDED: 'Item added to the list',
-  DELETE: 'all items are deleted',
-  DELETE_SINGLE: 'a single item is deleted',
-};
-
 init();
 
-function init() {
+function init(): void {
   const {form, buttonDeleteAll} = HTMLElements();
 
   form?.addEventListener('submit', submitForm);
   buttonDeleteAll?.addEventListener('click', deleteAll);
 }
 
+// CREATE TO-DO
 function submitForm(e: any) {
   e.preventDefault();
-  const {inputSearch, listResult} = HTMLElements();
-  inputSearch?.addEventListener('keydown', resetMessageAlert);
+  const {inputSearch, buttonSubmit, listResult} = HTMLElements();
+  if (buttonSubmit === null) return;
+  buttonSubmit.innerText = 'Submit';
+  inputSearch?.addEventListener('keydown', resetToastMessage);
 
   const newHTMLLiElement = createHTMLLiElement();
   if (newHTMLLiElement === undefined) return;
@@ -56,8 +53,7 @@ function submitForm(e: any) {
   return listResult?.append(newHTMLLiElement);
 }
 
-// CREATE TO-DO LIST
-function createHTMLLiElement() {
+function createHTMLLiElement(): HTMLLIElement | undefined {
   const newGrocery = getInputValue();
   if (newGrocery === undefined) return;
 
@@ -72,6 +68,7 @@ function createHTMLLiElement() {
   newHTMLDeleteButtonElement.setAttribute('class', 'delete');
   newHTMLEditButtonElement.innerText = 'edit';
   newHTMLDeleteButtonElement.innerText = 'delete';
+  newHTMLEditButtonElement.addEventListener('click', editSingleToDoList);
   newHTMLDeleteButtonElement.addEventListener('click', deleteSingleToDoList);
 
   newHTMLSpanElement.setAttribute('class', 'capitalize');
@@ -84,73 +81,78 @@ function createHTMLLiElement() {
   return newHTMLLiElement;
 }
 
-// INPUT VALUE
-
-function getInputValue() {
+function getInputValue(): string | undefined {
   const { inputSearch, messageAlert } = HTMLElements();
   if (messageAlert === null) return;
   if (inputSearch?.value === '') {   
-    paintMessageAlert(
-      STRING.EMPTY, 
-      STRING.WARNING,
-      STRING.SUCCESS, 
-    );
+    paintToastMessage(messages[0]);
     return;
   }
 
-  paintMessageAlert(
-    STRING.ADDED, 
-    STRING.SUCCESS,
-    STRING.WARNING, 
-  );
+  paintToastMessage(messages[1]);
   return inputSearch?.value;
 }
 
-// MESSAGE ALERT
-function resetMessageAlert() {
-  const { messageAlert } = HTMLElements();
-  if (messageAlert === null) return;
-
-  messageAlert.innerText = '';
-  messageAlert.classList.remove(STRING.SUCCESS);
-  messageAlert.classList.remove(STRING.WARNING);
+// Toast Messages
+type MessagesType = {
+  text: string;
+  add: string;
+  remove: string;
 }
 
-function paintMessageAlert(
-    string: string, 
-    className1: string, 
-    className2: string,
-  ) {
+const messages = [
+  {text: 'Please Enter Value', add: 'warning', remove: 'success'},
+  {text: 'Item added to the list', add: 'success', remove: 'warning'},
+  {text: 'All items are deleted', add: 'warning', remove: 'success'},
+  {text: 'A single item is deleted', add: 'warning', remove: 'success'},
+  {text: 'Value changed', add: '', remove: ''}, // FIXME
+];
+
+function paintToastMessage(obj: MessagesType): HTMLParagraphElement | undefined {
   const { messageAlert } = HTMLElements();
   if (messageAlert === null) return;
 
-  messageAlert.innerText = string;
-  messageAlert.classList.remove(className2);
-  messageAlert.classList.add(className1);
+  messageAlert.innerText = obj.text;
+  messageAlert.classList.remove(obj.remove);
+  messageAlert.classList.add(obj.add);
 
   return messageAlert;
 }
 
-// DELETE ITEMS
-function deleteSingleToDoList(e: any) {
+function resetToastMessage(): void {
+  const { messageAlert } = HTMLElements();
+  if (messageAlert === null) return;
+
+  messageAlert.innerText = '';
+  messageAlert.classList.remove('success');
+  messageAlert.classList.remove('warning');
+}
+
+// DELETE TO-DO
+function deleteSingleToDoList(e: any): void {
   const parentLiElement = e.target.parentElement;
 
   if (parentLiElement === undefined) console.error('Error: ', e);
   parentLiElement.remove();
-  paintMessageAlert(
-    STRING.DELETE_SINGLE, 
-    STRING.WARNING, 
-    STRING.SUCCESS,
-  );
+  paintToastMessage(messages[3]);
 }
 
-function deleteAll() {
+function deleteAll(): void {
   const {listResult} = HTMLElements();
   if (listResult === null) return;
   [...listResult.children].forEach(lists => lists.remove()); // HTMLCollection
-  paintMessageAlert(
-    STRING.DELETE, 
-    STRING.WARNING, 
-    STRING.SUCCESS,
-  );
+  paintToastMessage(messages[2]);
+}
+
+// FIXME: EDIT TO-DO
+function editSingleToDoList(e: any): void {
+  const {form, inputSearch, buttonSubmit} = HTMLElements();
+  if (form === null) return;
+  if (buttonSubmit === null) return;
+
+  const parentLiElement = e.target.parentElement;
+  const toDoValue = parentLiElement.children[0].innerText;
+
+  inputSearch?.setAttribute("value", toDoValue); // doesn't work
+  buttonSubmit.innerText = 'Edit';
 }
