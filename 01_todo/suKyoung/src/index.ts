@@ -31,7 +31,7 @@ function HTMLElements(): HTMLElements {
 
 init();
 
-function init(): void {
+function init() {
   const {form, buttonDeleteAll} = HTMLElements();
 
   form?.addEventListener('submit', submitForm);
@@ -119,7 +119,7 @@ function paintToastMessage(obj: MessagesType): HTMLParagraphElement | undefined 
   return messageAlert;
 }
 
-function resetToastMessage(): void {
+function resetToastMessage() {
   const { messageAlert } = HTMLElements();
   if (messageAlert === null) return;
 
@@ -129,7 +129,7 @@ function resetToastMessage(): void {
 }
 
 // DELETE TO-DO
-function deleteSingleToDoList(e: any): void {
+function deleteSingleToDoList(e: any) {
   const parentLiElement = e.target.parentElement;
 
   if (parentLiElement === undefined) console.error('Error: ', e);
@@ -137,22 +137,21 @@ function deleteSingleToDoList(e: any): void {
   paintToastMessage(messages[3]);
 }
 
-function deleteAll(): void {
+function deleteAll() {
   const {listResult} = HTMLElements();
   if (listResult === null) return;
   [...listResult.children].forEach(lists => lists.remove()); // HTMLCollection
   paintToastMessage(messages[2]);
 }
 
-// FIXME: EDIT TO-DO
-function editSingleToDoList(e: any): void {
+// EDIT TO-DO
+function editSingleToDoList(e: any) {
   const {form, inputSearch, buttonSubmit} = HTMLElements();
-  if (form === null) return;
-  if (buttonSubmit === null) return;
-
-  const parentLiElement = e.target.parentElement;
-  const toDoValue = parentLiElement.children[0].innerText;
-
-  inputSearch?.setAttribute("value", toDoValue); // doesn't work
-  buttonSubmit.innerText = 'Edit';
+  if (form && buttonSubmit) {
+    const parentLiElement = e.target.parentElement;
+    const toDoValue = parentLiElement.children[0].innerText;
+  
+    inputSearch?.setAttribute("value", toDoValue); // FIXME: doesn't work
+    buttonSubmit.innerText = 'Edit';
+  }
 }
