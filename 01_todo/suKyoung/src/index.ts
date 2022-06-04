@@ -157,7 +157,3 @@ function editSingleToDoList(e: any) {
   form.removeEventListener('submit', submitForm);
   form.addEventListener('submit', submitEditForm);
 }
-
-// inputSearch?.setAttribute("value", toDoValue); 는 작동안함
-// Using setAttribute() to modify certain attributes, most notably value in XUL, works inconsistently, as the attribute specifies the default value. To access or modify the current values, you should use the properties. For example, use Element.value instead of Element.setAttribute().
-// MDN: https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute
