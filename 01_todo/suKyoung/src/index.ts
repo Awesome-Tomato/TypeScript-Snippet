@@ -1,12 +1,12 @@
 // TYPE
 type HTMLElements = {
-  form: HTMLFormElement | null;
-  inputSearch: HTMLInputElement | null;
-  buttonSubmit: HTMLInputElement | null;
-  buttonEdit: HTMLInputElement | null;
-  buttonDeleteAll: HTMLInputElement | null;
-  listResult: HTMLUListElement | null;
-  messageAlert: HTMLParagraphElement | null;
+  form: HTMLFormElement;
+  inputSearch: HTMLInputElement;
+  buttonSubmit: HTMLInputElement;
+  buttonEdit: HTMLInputElement;
+  buttonDeleteAll: HTMLInputElement;
+  listResult: HTMLUListElement;
+  messageAlert: HTMLParagraphElement;
 }
 
 function HTMLElements(): HTMLElements {
@@ -42,21 +42,18 @@ function init() {
 function submitForm(e: any) {
   e.preventDefault();
   const {inputSearch, buttonSubmit, listResult} = HTMLElements();
-  if (buttonSubmit === null) return;
   buttonSubmit.innerText = 'Submit';
   inputSearch?.addEventListener('keydown', resetToastMessage);
 
-  const newHTMLLiElement = createHTMLLiElement();
-  if (newHTMLLiElement === undefined) return;
+  const newGrocery = getInputValue();
+  if (newGrocery === undefined) return;
+  const newHTMLLiElement = createHTMLLiElement(newGrocery);
   if (inputSearch !== null) inputSearch.value = '';
 
   return listResult?.append(newHTMLLiElement);
 }
 
-function createHTMLLiElement(): HTMLLIElement | undefined {
-  const newGrocery = getInputValue();
-  if (newGrocery === undefined) return;
-
+function createHTMLLiElement(text: string): HTMLLIElement {
   const newHTMLLiElement = document.createElement('li');
   const newHTMLSpanElement = document.createElement('span');
   const newHTMLEditButtonElement = document.createElement('button');
@@ -72,7 +69,7 @@ function createHTMLLiElement(): HTMLLIElement | undefined {
   newHTMLDeleteButtonElement.addEventListener('click', deleteSingleToDoList);
 
   newHTMLSpanElement.setAttribute('class', 'capitalize');
-  newHTMLSpanElement.innerText = newGrocery;
+  newHTMLSpanElement.innerText = text;
 
   newHTMLLiElement.append(newHTMLSpanElement);
   newHTMLLiElement.append(newHTMLEditButtonElement);
@@ -82,8 +79,7 @@ function createHTMLLiElement(): HTMLLIElement | undefined {
 }
 
 function getInputValue(): string | undefined {
-  const { inputSearch, messageAlert } = HTMLElements();
-  if (messageAlert === null) return;
+  const { inputSearch } = HTMLElements();
   if (inputSearch?.value === '') {   
     paintToastMessage(messages[0]);
     return;
@@ -100,18 +96,16 @@ type MessagesType = {
   remove: string;
 }
 
-const messages = [
+const messages: MessagesType[] = [
   {text: 'Please Enter Value', add: 'warning', remove: 'success'},
   {text: 'Item added to the list', add: 'success', remove: 'warning'},
   {text: 'All items are deleted', add: 'warning', remove: 'success'},
   {text: 'A single item is deleted', add: 'warning', remove: 'success'},
-  {text: 'Value changed', add: '', remove: ''}, // FIXME
+  {text: 'Value changed', add: 'success', remove: 'warning'},
 ];
 
-function paintToastMessage(obj: MessagesType): HTMLParagraphElement | undefined {
+function paintToastMessage(obj: MessagesType): HTMLParagraphElement {
   const { messageAlert } = HTMLElements();
-  if (messageAlert === null) return;
-
   messageAlert.innerText = obj.text;
   messageAlert.classList.remove(obj.remove);
   messageAlert.classList.add(obj.add);
@@ -121,7 +115,6 @@ function paintToastMessage(obj: MessagesType): HTMLParagraphElement | undefined 
 
 function resetToastMessage() {
   const { messageAlert } = HTMLElements();
-  if (messageAlert === null) return;
 
   messageAlert.innerText = '';
   messageAlert.classList.remove('success');
@@ -131,7 +124,6 @@ function resetToastMessage() {
 // DELETE TO-DO
 function deleteSingleToDoList(e: any) {
   const parentLiElement = e.target.parentElement;
-
   if (parentLiElement === undefined) console.error('Error: ', e);
   parentLiElement.remove();
   paintToastMessage(messages[3]);
@@ -139,7 +131,6 @@ function deleteSingleToDoList(e: any) {
 
 function deleteAll() {
   const {listResult} = HTMLElements();
-  if (listResult === null) return;
   [...listResult.children].forEach(lists => lists.remove()); // HTMLCollection
   paintToastMessage(messages[2]);
 }
@@ -147,11 +138,26 @@ function deleteAll() {
 // EDIT TO-DO
 function editSingleToDoList(e: any) {
   const {form, inputSearch, buttonSubmit} = HTMLElements();
-  if (form && buttonSubmit) {
-    const parentLiElement = e.target.parentElement;
-    const toDoValue = parentLiElement.children[0].innerText;
-  
-    inputSearch?.setAttribute("value", toDoValue); // FIXME: doesn't work
-    buttonSubmit.innerText = 'Edit';
+  const parentLiElement = e.target.parentElement;
+  const toDoValue = parentLiElement.children[0].innerText;
+  inputSearch.value = toDoValue;
+  buttonSubmit.innerText = 'Edit';
+
+  function submitEditForm(e: any) {
+    e.preventDefault();
+    const editValue = getInputValue();
+    parentLiElement.children[0].innerText = editValue;
+    buttonSubmit.innerText = 'Submit';
+    inputSearch.value = '';
+    paintToastMessage(messages[4]);
+    form.removeEventListener('submit', submitEditForm);
+    form.addEventListener('submit', submitForm);
   }
+  
+  form.removeEventListener('submit', submitForm);
+  form.addEventListener('submit', submitEditForm);
 }
+
+// inputSearch?.setAttribute("value", toDoValue); 는 작동안함
+// Using setAttribute() to modify certain attributes, most notably value in XUL, works inconsistently, as the attribute specifies the default value. To access or modify the current values, you should use the properties. For example, use Element.value instead of Element.setAttribute().
+// MDN: https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute
