@@ -1,12 +1,4 @@
-export type HTMLElements = {
-  form: HTMLFormElement;
-  inputSearch: HTMLInputElement;
-  buttonSubmit: HTMLInputElement;
-  buttonEdit: HTMLInputElement;
-  buttonDeleteAll: HTMLInputElement;
-  listResult: HTMLUListElement;
-  messageAlert: HTMLParagraphElement;
-}
+import { HTMLElements, MessagesType } from "./types";
 
 // FIXME: 혹시모를 예외처리 필요
 export function HTMLElements(): HTMLElements {
@@ -27,12 +19,6 @@ export function HTMLElements(): HTMLElements {
     listResult: listResult as HTMLUListElement,
     messageAlert: messageAlert as HTMLParagraphElement,
   }
-}
-
-export type MessagesType = {
-  text: string;
-  add: string;
-  remove: string;
 }
 
 // FIXME: enum을 사용하도록 변경
