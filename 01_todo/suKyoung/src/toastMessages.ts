@@ -1,4 +1,5 @@
-import { HTMLElements, MessagesType } from "./utils";
+import { HTMLElements } from "./utils";
+import { MessagesType } from "./types";
 
 // FIXME: 만일 class 종류가 늘어난다면? 어떻게하면 변경에 유연하게 대처할 수 있을까
 export function paintToastMessage(obj: MessagesType): HTMLParagraphElement {

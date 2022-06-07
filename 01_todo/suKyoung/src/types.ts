@@ -7,3 +7,9 @@ export type HTMLElements = {
   listResult: HTMLUListElement;
   messageAlert: HTMLParagraphElement;
 }
+
+export type MessagesType = {
+  text: string;
+  add: string;
+  remove: string;
+}
