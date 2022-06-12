@@ -74,14 +74,17 @@ fieldset {
   line-height: 24px;
   text-align: center;
   font-size: var(--fontsize-paragraph1);
+  border-left: 10px solid transparent;
 }
 .warning {
   color: var(--color-white);
   background-color: var(--color-warning);
+  border-left: 10px solid #cf222e;
 }
 .success {
   color: var(--color-white);
   background-color: var(--color-success);
+  border-left: 10px solid #2da44e;
 }
 
 

@@ -1,20 +1,32 @@
-import { HTMLElements } from "./utils";
-import { MessagesType } from "./types";
+import { HTMLElements } from "./index.js";
 
-// FIXME: 만일 class 종류가 늘어난다면? 어떻게하면 변경에 유연하게 대처할 수 있을까
-export function paintToastMessage(obj: MessagesType): HTMLParagraphElement {
+// FIXME: enum을 사용하도록 변경
+const toastMessageStatus = {
+  warning: 'warning',
+  success: 'success',
+  // 변경사항 있을 시, 여기를 변경
+};
+
+export function paintToastMessage(text: string, status: any): void {
   const { messageAlert } = HTMLElements();
-  messageAlert.innerText = obj.text;
-  messageAlert.classList.remove(obj.remove);
-  messageAlert.classList.add(obj.add);
+  setToastContent(messageAlert, text);
+  setToastStatus(messageAlert, status);
 
-  return messageAlert;
+  const STATUS = Object.values(toastMessageStatus);
+  if (STATUS[status] === 'remove') return removeToastMessage(messageAlert);
 }
 
-export function resetToastMessage() {
-  const { messageAlert } = HTMLElements();
+export function setToastContent(message: HTMLParagraphElement, text: string) {
+  return message.innerText = text;
+}
 
-  messageAlert.innerText = '';
-  messageAlert.classList.remove('success');
-  messageAlert.classList.remove('warning');
+export function setToastStatus(message: HTMLParagraphElement, status: string) {
+  const removeClass = (cls: string) => message.classList.remove(cls);  
+  Object.values(toastMessageStatus).forEach(removeClass);
+  return message.classList.add(status);
+}
+
+export const removeToastMessage = (message: HTMLParagraphElement) => {
+  const removeClass = (cls: string) => message.classList.remove(cls);  
+  return Object.values(toastMessageStatus).forEach(removeClass);
 }

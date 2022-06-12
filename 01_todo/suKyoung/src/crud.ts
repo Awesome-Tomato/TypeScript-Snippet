@@ -1,13 +1,13 @@
-import { HTMLElements, messages } from "./utils";
-import { createHTMLLiElement } from "./createElement";
-import { paintToastMessage, resetToastMessage } from "./toastMessages";
+import { HTMLElements } from "./index.js";
+import { createHTMLLiElement } from "./createElement.js";
+import { paintToastMessage } from "./toastMessages.js";
 
 // CREATE TO-DO
 export function submitForm(e: any) {
   e.preventDefault();
   const {inputSearch, buttonSubmit, listResult} = HTMLElements();
   buttonSubmit.innerText = 'Submit';
-  inputSearch.addEventListener('keydown', resetToastMessage);
+  inputSearch.addEventListener('keydown', () => paintToastMessage('', 'remove'));
 
   const newGrocery = getInputValue();
   if (newGrocery === undefined) return;
@@ -20,27 +20,26 @@ export function submitForm(e: any) {
 function getInputValue(): string | undefined {
   const { inputSearch } = HTMLElements();
   if (inputSearch?.value === '') {   
-    paintToastMessage(messages[0]);
+    paintToastMessage('Please Enter Value', 'warning');
     return;
   }
 
-  paintToastMessage(messages[1]);
+  paintToastMessage('Item added to the list', 'success');
   return inputSearch?.value;
 }
 
 // DELETE TO-DO
 export function deleteSingleToDoList(e: any) {
-  // FIXME: 구조가 바뀌거나 순서가 바뀐다면? 수정에 용이하게 대처하기 위해서는?
   const parentLiElement = e.target.parentElement;
   if (parentLiElement === undefined) console.error('Error: ', e);
   parentLiElement.remove();
-  paintToastMessage(messages[3]);
+  paintToastMessage('A single item is deleted', 'warning');
 }
 
 export function deleteAll() {
   const {listResult} = HTMLElements();
   [...listResult.children].forEach(lists => lists.remove()); // HTMLCollection
-  paintToastMessage(messages[2]);
+  paintToastMessage('All items are deleted', 'warning');
 }
 
 // EDIT TO-DO
@@ -57,7 +56,7 @@ export function editSingleToDoList(e: any) {
     parentLiElement.children[0].innerText = editValue;
     buttonSubmit.innerText = 'Submit';
     inputSearch.value = '';
-    paintToastMessage(messages[4]);
+    paintToastMessage('Value changed', 'success');
     // FIXME: 해당 핸들러에서 처리하거나 다른 방식으로 처리할 수 있는 방법이 있을지?
     form.removeEventListener('submit', submitEditForm);
     form.addEventListener('submit', submitForm);

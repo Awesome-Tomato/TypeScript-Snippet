@@ -1,4 +1,4 @@
-import { deleteSingleToDoList, editSingleToDoList } from "./crud";
+import { deleteSingleToDoList, editSingleToDoList } from "./crud.js";
 
 // FIXME: 반복되는 코드를 함수로 변경
 export function createHTMLLiElement(text: string): HTMLLIElement {
