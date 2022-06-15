@@ -1,6 +1,6 @@
 import './Layout.style.css';
 
-const Layout = ({children}: any) => {
+const Layout: React.FC<{children: any}> = ({children}) => {
 
   return (
     <main>

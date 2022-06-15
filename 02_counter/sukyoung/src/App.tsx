@@ -1,9 +1,8 @@
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { Layout, Button } from './components';
 import './App.css';
 
-function App() {
-
+function App(): ReactElement {
   const [ num, setNum ] = useState(0);
   const handleDecrease = () => setNum(prev => prev - 1);
   const handleReset = () => setNum(0);
