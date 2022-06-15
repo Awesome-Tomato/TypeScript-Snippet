@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Layout, Button } from './components';
 import './App.css';
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
   const handleIncrease = () => setNum(prev => prev + 1);
 
   return (
-    <main>
+    <Layout>
       <h1 className='title'>
         Counter
       </h1>
@@ -21,43 +22,34 @@ function App() {
         <ButtonReset handleReset={handleReset} />
         <ButtonIncrease handleIncrease={handleIncrease} />
       </form>
-    </main>
+    </Layout>
   );
 }
 
 const ButtonDecrease: React.FC<{handleDecrease: () => void}> = ({handleDecrease}) => {
 
   return (
-    <button 
-      type="button"
-      onClick={handleDecrease}
-    >
+    <Button onClick={handleDecrease}>
       Decrease
-    </button>
+    </Button>
   );
 }
 
 const ButtonReset: React.FC<{handleReset: () => void}> = ({handleReset}) => {
 
   return(
-    <button 
-      type="button"
-      onClick={handleReset}
-    >
+    <Button onClick={handleReset}>
       Reset
-    </button>
+    </Button>
   );
 }
 
 const ButtonIncrease: React.FC<{handleIncrease: () => void}> = ({handleIncrease}) => {
 
   return (
-    <button 
-      type="button"
-      onClick={handleIncrease}
-    >
+    <Button onClick={handleIncrease}>
       Increase
-    </button>
+    </Button>
   );
 }
 
