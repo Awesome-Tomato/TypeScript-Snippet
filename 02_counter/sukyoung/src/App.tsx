@@ -10,45 +10,14 @@ function App(): ReactElement {
 
   return (
     <Layout>
-      <h1 className='title'>
-        Counter
-      </h1>
-      <h2 className='result'>
-        {num}
-      </h2>
+      <h1 className='title'>Counter</h1>
+      <h2 className='result'>{num}</h2>
       <form>
-        <ButtonDecrease handleDecrease={handleDecrease} />
-        <ButtonReset handleReset={handleReset} />
-        <ButtonIncrease handleIncrease={handleIncrease} />
+        <Button onClick={handleDecrease}>Decrease</Button>
+        <Button onClick={handleReset}>Reset</Button>
+        <Button onClick={handleIncrease}>Increase</Button>
       </form>
     </Layout>
-  );
-}
-
-const ButtonDecrease: React.FC<{handleDecrease: () => void}> = ({handleDecrease}) => {
-
-  return (
-    <Button onClick={handleDecrease}>
-      Decrease
-    </Button>
-  );
-}
-
-const ButtonReset: React.FC<{handleReset: () => void}> = ({handleReset}) => {
-
-  return(
-    <Button onClick={handleReset}>
-      Reset
-    </Button>
-  );
-}
-
-const ButtonIncrease: React.FC<{handleIncrease: () => void}> = ({handleIncrease}) => {
-
-  return (
-    <Button onClick={handleIncrease}>
-      Increase
-    </Button>
   );
 }
 
