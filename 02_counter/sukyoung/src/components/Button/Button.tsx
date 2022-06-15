@@ -1,11 +1,17 @@
+import { ReactElement } from 'react';
 import './Button.style.css';
 
-const Button = ({children, ...props}: any) => {
+interface IButton {
+  children: string;
+  onClick: () => void;
+}
+
+const Button = ({children, onClick}: IButton): ReactElement => {
 
   return (
     <button 
       type="button"
-      onClick={props.onClick}
+      onClick={onClick}
     >
       {children}
     </button>
