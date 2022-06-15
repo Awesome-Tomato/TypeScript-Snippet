@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Button } from "./components/Button/Button";
+import Title from "./components/Title/Title";
 import './App.css';
+import { useState } from "react";
 
 function App() {
+  const [count, setCount] = useState(0);
+
+  const increase = () => setCount(prev => prev+1);
+  const decrease = () => setCount(prev => prev-1);
+  const reset = () => setCount(0);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Title>Counter</Title>
+      <div>
+        <span>{count}</span>
+      </div>
+      <Button onClick={decrease}> DECREASE</Button>
+      <Button onClick={reset}>RESET</Button>
+      <Button onClick={increase}>INCREASE</Button>
     </div>
   );
 }

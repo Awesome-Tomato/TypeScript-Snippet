@@ -5,9 +5,32 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background-color: #eff2f4;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.App {
+  text-align: center;
+}
+
+.App > div {
+  margin-bottom: 32px;
+}
+
+.App > div > span {
+  font-size: 80px;
+  color: green;
+  font-weight: bold;
+}
+
+Button {
+  margin-right: 16px;
+}
+Button:last-child {
+  margin-right: 0;
 }
