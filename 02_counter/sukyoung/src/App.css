@@ -1,8 +1,3 @@
-main {
-  width: 100%;
-  text-align: center;
-}
-
 .title {
   font-size: 48px;
 }
@@ -22,8 +17,3 @@ form {
   gap: 8px;
 }
 
-button {
-  width: fit-content;
-  height: 32px;
-  font-size: 16px;
-}
